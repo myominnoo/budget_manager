@@ -1,0 +1,84 @@
+
+
+
+ui <- fluidPage(
+  h2("test page"),
+  theme = bslib::bs_theme(5, "quartz"), 
+  sidebarLayout(
+    sidebarPanel(
+      h2("Title sidebar"), 
+      fileInput("u", "Upload"), 
+      actionButton("a", "Click")
+    ), 
+    mainPanel(
+      verbatimTextOutput("info")
+    )
+  )
+)
+
+
+# https://www.quicken.com/blog/budget-categories/
+categories_list <- 
+  list(`Essentials` = list(
+    # Essentials
+    "Housing", 
+    "Utilities", 
+    "Insurance", 
+    "Food", 
+    "Healthcare", 
+    "Transportation", 
+    "Personal"
+  ), 
+  `Non-essentials` = list(
+    # Non-essentials
+    "Entertainment", 
+    "Travel",
+    "Debt",
+    "Other"
+  ), 
+  `Income` = list(
+    # Others
+    "Savings", 
+    "Paycheck", 
+    "Interest",
+    "Bonus"
+  ))
+
+expense_fct <- c(
+  "Housing", 
+  "Utilities", 
+  "Insurance", 
+  "Food", 
+  "Healthcare", 
+  "Transportation", 
+  "Personal", 
+  "Entertainment", 
+  "Travel", 
+  "Debt",
+  "Other"
+)
+
+income_fct <- c(
+  "Savings", 
+  "Paycheck", 
+  "Interest",
+  "Bonus"
+)
+
+categories_fct <- c(expense_fct, income_fct)
+
+account_fct <- c("Cheque", "Savings", "Visa")
+
+type_fct <- c("Debit", "Credit")
+
+
+df_na <- data.frame(Date = as.Date(character()),
+                    Category = factor(levels = categories_fct), 
+                    Description = character(), 
+                    Account = factor(levels = account_fct), 
+                    Type = factor(levels = type_fct), 
+                    Amount = numeric(), 
+                    Note = character(), 
+                    stringsAsFactors = FALSE) 
+
+

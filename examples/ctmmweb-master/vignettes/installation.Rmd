@@ -1,0 +1,70 @@
+---
+title: "Installation"
+author: "Xianghui Dong"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Installation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Installation
+
+### Windows Installer
+
+- You can run our [windows installer](https://github.com/ctmm-initiative/ctmmweb/releases/download/v0.2.10/ctmmwebsetup.exe) which will guide through these steps in a wizard style:
+  - Install R. This could be skipped if you already have R installed.
+    Note it's possible to have multiple versions of R installed, however that may require more knowledge and tweaks. For example if you had a R 3.6 version Rscript.exe in windows PATH but just installed R 4.0 without uninstall R 3.6, the installer will fail because a R 3.6 Rscript will be used to install the packages.
+    We suggest to always install and keep the latest R version to avoid possible problems.
+    Installing R to `Program Files` could cause further permission problems([see discussion](https://cran.r-project.org/bin/windows/base/rw-FAQ.html#Does-R-run-under-Windows-Vista_003f)), we suggest to install R to a user writable folder.
+  - Install `ctmmweb` package from github.
+  - Start `ctmmweb` app.
+  - Shortcuts for the app and a self update script can be created in program menu too.
+
+
+### Install with R
+
+1. Install R
+
+    Download R installer([win](https://cloud.r-project.org/bin/windows/base/old/4.0.0/R-4.0.0-win.exe), [mac](https://cloud.r-project.org/bin/macosx/R-4.0.0.pkg), [Linux](https://cloud.r-project.org/bin/linux/)) and install R.
+
+    *[RStudio](https://www.rstudio.com/products/rstudio/download/#download) is recommended but not a must.*
+
+2. Start R
+
+    Start `R console` from start menu (or RStudio if installed). All code below will run inside it.
+
+3. Install app
+
+    ```r
+    if (!require("remotes")) install.packages("remotes")
+    remotes::install_github("ctmm-initiative/ctmmweb")
+    
+    ```
+
+4. Run app
+
+    ```r
+    ctmmweb::app()
+    ```
+
+## FAQ
+
+- If you met errors in install/upgrade lots of packages, restart R session and install again often can solve the problem. 
+- The app is started with default browser. Chrome is recommended as some other browsers have known limitations.
+
+### Linux
+- Following instructions [here for installing R](https://cloud.r-project.org/bin/linux/ubuntu/) (assuming Ubuntu or Linux Mint). Make sure to install `r-base-dev` too.
+- RStudio have installer for Linux.
+- Some of the packages needed for the app need extra steps to install properly:
+  + We recommend to use `remotes` instead of `devtools` as `remotes` has much less dependencies and often have less package installation problems([because devtools itself need many more packages which cannot be upgraded easily in one session](https://github.com/r-lib/devtools/issues/2223)).
+  + If you are using `devtools`, it need `libcurl`, `ssl` in linux if it's not already installed in your system. You can watch error messages to check what is required. I installed them in Linux Mint 18 with
+  
+        sudo apt-get install libcurl4-openssl-dev
+        sudo apt-get install libssl-dev
+  
+  + `ctmm` need `rgdal`, which need another two libraries in linux:
+  
+        sudo apt-get update && sudo apt-get install libgdal-dev libproj-dev
+  

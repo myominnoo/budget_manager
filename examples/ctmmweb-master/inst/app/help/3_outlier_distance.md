@@ -1,0 +1,19 @@
+- For every individual in current subset, the median center of locations is calculated by taking median of all x and y. 
+    - This is a simple approximate that fast to calculate and not sensitive to far fetched outliers.
+    - If there are big gaps in sampling time, the individual could have moved a long distance. The median center of each sampling period are calculated individually to better detect the true outliers.
+- The histogram grouped the points by the distance to center. Points with extreme distances could be outliers that caused by error.
+    - The bin count for histogram can be adjusted.
+    - y axis is compressed to show the few outlier count better.
+- The scatter plot below showed the locations colored by the histogram group color.
+    - The lower distance bin colors are more transparent to reduce clutter.
+    - The median centers are drew with different shape and in blue color (labeled as `id` in legend). The available shapes may not be enough if many individuals are included. 
+    - You can draw a rectangle with mouse button pressed, then double click inside the rectangle to **zoom in**. Double click in plot reset the zoom in.
+- When you use mouse to select a range in histogram, the points in selected range will be highlighted in the scatter plot with bigger size (which can be adjusted), and the other points become gray background.
+    - All points in selected range are listed in the table below, which can be sorted.
+    - Click to select rows in this table will further highlight selected points with a square. You can select multiple rows with Shift + Click on first and last row.
+    - `Remove Selected` button will remove selected points from data, and list them in the table of `Removed Outliers`. You should select all the points to be removed then remove them together instead of removing points one by one, as once points were removed, the histogram and scatter plot will also update. 
+    - You can continue to inspect and remove outliers. The points already removed can also be reset and back to original state.
+- You can move back to **Visualization** page and the plots will also update. There will be a line in the table `1.Individuals` to remind some outliers have been removed. 
+- `Export Current` in table 1 will export the current subset as csv file, and mark the outliers with a column `manually_marked_outlier`, which can be imported to Movebank website and be recognized. Importing the csv back into app will have the outliers discarded.
+- `Save Progess` will save outliers with this column in csv output, which is similar to `Export Current`. Restore progress from the whole zip will restore the outlier status because more complete states have been saved.
+- The overall design of this page is quite similar to `Time subsetting`.

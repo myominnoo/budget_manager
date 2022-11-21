@@ -1,0 +1,13 @@
+name: budget_manager
+title: budget_manager
+username:
+account: myominnoo
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 7655790
+bundleId: 6534044
+url: https://myominnoo.shinyapps.io/budget_manager/
+when: 1668917948.04721
+lastSyncTime: 1668917948.04722
+asMultiple: FALSE
+asStatic: FALSE

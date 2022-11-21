@@ -258,7 +258,7 @@ server <- function(input, output, session) {
              diff = Credit - Debit)
     d$fltr <- d$data %>%  
       bind_rows(dummy()) %>%
-      filter(mnth == input$month, yr == input$year)
+      filter(mnth %in% input$month, yr %in% input$year)
   })
   
   observe({

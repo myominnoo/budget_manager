@@ -1,0 +1,13 @@
+name: budgetApp
+title: budgetApp
+username:
+account: myominnoo
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 6590367
+bundleId: 6534052
+url: https://myominnoo.shinyapps.io/BudgetApp/
+when: 1668918369.77223
+lastSyncTime: 1668918369.77224
+asMultiple: FALSE
+asStatic: FALSE

@@ -1,0 +1,8 @@
+- This only work with single individual, so you need to select `one individual` in **Visualization** page, or only one individual is available in current page.
+- All the points are grouped by sampling time, showed in histogram.
+    - The bin count can be adjusted for more resolution or better seasonal representation.
+- The scatter plot colored points with same color of bin group in histogram.
+    - If you select a time range in histogram with mouse, the points in selection will be highlighted, with other points in gray background.
+    - Click `Add` button in `Current Time Range` will add current selection into `Time Range List`. You can add multiple time ranges, or reset the list.
+    - You can **zoom in** the scatter plot.
+- Click `Generate Subset` will combine all added time ranges into one new data set, and return to Visualization page. This is intended for the case of generating a new data set with non-overlapping sections. If you need multiple separate new data sets, you can always generate them one by one.
