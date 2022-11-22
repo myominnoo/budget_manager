@@ -149,7 +149,6 @@ bodyUI <- tagList(
 # sidebar ui --------------------------------------------------------------
 
 sidebarUI <- tagList(
-  img(src = "www/icons8-accounting-100.png", align = "right"),
   h2(HTML("<b>Budget Manager</b>")), 
   p(HTML("version 1.2.0 <br>"), style = "font-size:10px;"), hr(), 
   numericInput("year", "Year", lubridate::year(Sys.Date()), width = 100), 
