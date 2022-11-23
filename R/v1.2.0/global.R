@@ -11,6 +11,7 @@ library(lubridate)
 library(DT)
 library(shinydashboard)
 library(formattable)
+library(waiter)
 
 
 source("R/infoUI.R")
@@ -31,9 +32,22 @@ source("R/server_helpers.R")
 # 34.203.76.245
 # 3.217.214.132
 # 34.197.152.155
-con <- "mongodb+srv://myself:letmein2022@budgetapp.whtgpcl.mongodb.net/?retryWrites=true&w=majority"
-usersDF <- mongolite::mongo(collection = "users", db = "budgetdb", url = con, verbose = TRUE)
-transDF <- mongolite::mongo(collection = "transaction", db = "budgetdb", url = con, verbose = TRUE)
+con <- paste0("mongodb+srv://myself:letmein2022@budgetapp.whtgpcl.mongodb.net", 
+              "/?retryWrites=true&w=majority")
+dbconnect <- function(collection, db, url) {
+  tryCatch({
+    mongolite::mongo(collection, db, url, verbose = TRUE)
+  }, error = function(cond) TRUE)
+}
 
 
+# loader ------------------------------------------------------------------
 
+loader <- function(color = "#FFFFFF") {
+  waiter::waiter_show( # show the waiter
+    color = color, 
+    html = spin_dots() # use a spinner
+  )
+  Sys.sleep(1) # do something that takes time
+  waiter::waiter_hide() # hide the waiter
+}

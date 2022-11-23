@@ -13,10 +13,31 @@ server <- function(input, output, session) {
   output$display_username <- renderText(paste0("Username : ", env$user$user))
   
   ## show login page for the first time
+  loader()
   showLogin()
-  observeEvent(input$showSignup, showSignup())
-  observeEvent(input$cancelSignup, showLogin())
+  usersDF <- dbconnect("users", "budgetdb", con)
+  transDF <- dbconnect("transaction", "budgetdb", con)
+  
+  observeEvent(input$showSignup, {
+    loader()
+    showSignup()
+  })
+  observeEvent(input$cancelSignup, {
+    loader()
+    showLogin()
+  })
   observeEvent(input$exit, stopApp())
+  observeEvent(input$help, {
+    removeModal()
+    updateTabsetPanel(session, "tab", "helpTab")
+    loader()
+    output$helpUI <- renderUI(helpUI)
+  })
+  observeEvent(input$returnLogin, {
+    updateTabsetPanel(session, "tab", "loginTab")
+    loader()
+    showLogin()
+  })
   
   ## log user in 
   observeEvent(input$login, {
@@ -30,6 +51,7 @@ server <- function(input, output, session) {
       env$data <- getTransDB(transDF, env$user$user) 
       updateTabsetPanel(session, "tab", selected = "mainTab")
       removeModal()
+      loader()
     }
   })
   
@@ -39,9 +61,12 @@ server <- function(input, output, session) {
     if (err) {
       showSignup()
     } else {
-      showErrorModal("Your name is in there! Try to log in!", 
+      showErrorModal("Your name is in there! Try to log in!", "", 
+                     "Redirecting to Login ... ", 
                      title = "Success", footer = NULL)
       setSignupInfo(input$signup_un, input$signup_pw, usersDF)
+      Sys.sleep(5)
+      loader()
       showLogin()
     }
   })
@@ -113,9 +138,12 @@ server <- function(input, output, session) {
   ## edit event 
   observeEvent(input$data_cell_edit, {
     info <- input$data_cell_edit
-    cat("edits made in row [", info$row, "] & col [", info$col, 
-        "] with value [", info$value, "]\n")
-    env$data[info$row, info$col + 1] <- info$value
+    ori <- env$data[info$row, info$col + 1]
+    value <- get_data_edit(info$col, info$value, ori)
+    env$data[info$row, info$col + 1] <- value
+    output$data <- renderDataTable({
+      showTransDF(env$data)
+    })
   })
   
   ## delete event
@@ -159,6 +187,10 @@ server <- function(input, output, session) {
             mutate(id = paste(created_date, user))
         ) %>%
         setVars()
+      output$data <- renderDataTable({
+        env$data <- env$data %>% arrange(desc(Date))
+        showTransDF(env$data)
+      })
       showErrorModal(title = "You rock!", "Whoop-de-doo ! You just added an entry !", 
                      footer = modalButton("Close"))
     }

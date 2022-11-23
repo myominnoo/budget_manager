@@ -10,6 +10,70 @@ showSetting <- function() {
 
 # transaction -------------------------------------------------------------
 
+# check_data_edit_empty <- function(value, text) {
+#   if (stringr::str_trim(value) == "") 
+#     showErrorModal(text, title = "Error", footer = modalButton("Close"))
+# }
+
+
+check_data_edit_invalid <- function(col, value, original) {
+  col <- as.character(col)
+  e <- FALSE
+  if (col == "1") {
+    if (!(value %in% categories_fct)) {
+      showErrorModal(sprintf("%s value is not valid!", "Category"), 
+                     title = "Invalid", footer = modalButton("Close"))
+      e <- TRUE
+    }
+  }
+  if (col == "3") {
+    if (!(value %in% account_fct)) {
+      showErrorModal(sprintf("%s value is not valid!", "Account"), 
+                     title = "Invalid", footer = modalButton("Close"))
+      e <- TRUE
+    }
+  }
+  if (col == "4") {
+    if (!(value %in% type_fct)) {
+      showErrorModal(sprintf("%s value is not valid!", "Type"), 
+                     title = "Invalid", footer = modalButton("Close"))
+      e <- TRUE
+    }
+  }
+  if (col == "5") {
+    if (value == "" | value == 0) {
+      showErrorModal(sprintf("%s value is not valid!", "Amount"), 
+                     title = "Invalid", footer = modalButton("Close"))
+      e <- TRUE
+    }
+  }
+  if (col %in% c("2", "6")) e <- FALSE
+  return(e)
+}
+get_data_edit <- function(col, value, original) {
+  col <- as.character(col)
+  e <- check_data_edit_invalid(col, value, original)
+  if (col %in% c("2", "6")) {
+    if (value == "") 
+      r <- value
+  } else if (value == "" | e) {
+    r <- original
+  } else {
+    r <- switch(
+      col,
+      "0" = as.Date(value),
+      "1" = factor(value, levels = categories_fct),
+      "2" = value,
+      "3" = factor(value, levels = account_fct),
+      "4" = factor(value, levels = type_fct), 
+      "5" = value,
+      "6" = value
+    )
+  }
+  return(r)
+} 
+
+
 silent <- function(x) {
   suppressMessages(suppressWarnings(try(x, silent = TRUE)))
 }

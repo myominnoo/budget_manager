@@ -6,9 +6,11 @@ infoUI <- tabPanel(
   "Info", 
   icon = icon("circle-info"), 
   
-  h2("Myo's Personal Budget Manager"), 
+  h2("Categorizing Personal Budget"), 
   hr(), 
-  p("Developed and maintained by Myo Minn Oo <dr.myominnoo@gmail.com>"), 
+  p("This App is developed and maintained by Myo Minn Oo."), 
+  div("Souce code is available here: ",
+      a("Budget Manager App", href="https://github.com/myominnoo/budget_manager")), 
   br(), 
   p("A well-thought-out budget can help you take control of your finances and use your money with real purpose, so you have enough to pay your bills, grow your savings, and still enjoy life today."), 
   h5("Essentials"), 
@@ -49,3 +51,16 @@ infoUI <- tabPanel(
   p("Credit: https://www.quicken.com/blog/budget-categories/")
 )
 
+
+
+helpUI <- tagList(
+  br(), 
+  column(12, align = "right", 
+         actionButton("returnLogin", "Login", icon = icon("right-to-bracket"))), 
+  div(
+    align = "center", 
+    h2(HTML("<strong>How to use Budget Manager App</strong>")), 
+    hr(), 
+    p(HTML("More to be added later .. "))
+  )
+)

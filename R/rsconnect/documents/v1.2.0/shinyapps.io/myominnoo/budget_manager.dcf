@@ -5,9 +5,9 @@ account: myominnoo
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 7685493
-bundleId: 6543142
+bundleId: 6544953
 url: https://myominnoo.shinyapps.io/budget_manager/
-when: 1669127359.39498
-lastSyncTime: 1669127359.395
+when: 1669162585.5371
+lastSyncTime: 1669162585.53711
 asMultiple: FALSE
 asStatic: FALSE

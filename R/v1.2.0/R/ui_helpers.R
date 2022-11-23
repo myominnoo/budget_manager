@@ -53,9 +53,10 @@ loginBodyUI <- tagList(
 ) 
 
 loginFooterUI <- tagList(
-  actionButton("login", "Login"),
-  actionButton("showSignup", "Sign Up"), 
-  actionButton("exit", "Exit")
+  actionButton("login", "Login", icon = icon("right-to-bracket")),
+  actionButton("showSignup", "Sign Up", icon = icon("user-plus")), 
+  actionButton("help", "Help", icon = icon("circle-info")), 
+  actionButton("exit", "Exit", icon = icon("door-open"))
 )
 
 
@@ -80,10 +81,13 @@ newTransUI <- tagList(
 
 importUI <- function() {
   showErrorModal(
-    fileInput("upload", "Select a file"), 
+    fluidRow(
+      column(2), 
+      column(8, align = "center", fileInput("upload", "Select a file"))
+    ), 
     footer = tagList(actionButton("import", "Import", icon("upload")),
                      modalButton("Cancel")), 
-    title = h2(style="text-align:center;", "Import Your Data"), easyClose = FALSE
+    title = "Import Your Data", size = "m", easyClose = FALSE
   )
 }
 
@@ -92,8 +96,10 @@ transUI <- tabPanel(
   icon = icon("cash-register"), 
   fluidRow(
     column(3, newTransUI), 
-    column(3, offset = 6, actionButton("delete", "Delete", icon = icon("xmark")), 
-           actionButton("undo", "Undo", icon = icon("rotate-left")))
+    column(9, align = "right", 
+           actionButton("delete", "Delete", icon = icon("xmark"), width = 100), 
+           actionButton("undo", "Undo", icon = icon("rotate-left"), width = 100), 
+           actionButton("sync", "Sync", icon("rotate"), width = 100))
   ), 
   hr(), 
   DT::dataTableOutput("data")
@@ -149,7 +155,7 @@ bodyUI <- tagList(
 # sidebar ui --------------------------------------------------------------
 
 sidebarUI <- tagList(
-  h2(HTML("<b>Budget Manager</b>")), 
+  h2(HTML("<b>Budget Manager App</b>")), 
   p(HTML("version 1.2.0 <br>"), style = "font-size:10px;"), hr(), 
   numericInput("year", "Year", lubridate::year(Sys.Date()), width = 100), 
   sliderTextInput("month", "Month", month.abb, 
@@ -162,7 +168,9 @@ sidebarUI <- tagList(
   hr(), 
   p(textOutput("display_username"), style = "font-size:14px;"), 
   p(textOutput("display_currentTime"), style = "font-size:14px;"), br(), 
-  p(HTML("Developed by Myo Minn Oo <br>", "Please contact at dr.myominnoo$gmail.com"),
+  p(HTML("Developed & maintained by Myo Minn Oo <br>", 
+         "If you use it, please share an acknowledgement email to ", 
+         "dr.myominnoo@gmail.com!"),
     style = "font-size:10px;") 
 )
 
@@ -186,9 +194,8 @@ settingFooterUI <- tagList(actionButton("change", "Change"),
 floatUI <- shinymanager::fab_button(
   position = "bottom-right", 
   actionButton("setting", "Setting", icon("gear")),
-  actionButton("sync", "Sync", icon("rotate")),
-  actionButton("logout", "Logout", icon("sign-out")),
-  actionButton("showImport", "Import data", icon("upload"))
+  actionButton("showImport", "Import data", icon("upload")),
+  actionButton("logout", "Logout", icon("sign-out"))
 )
 
 # main ui -----------------------------------------------------------------
